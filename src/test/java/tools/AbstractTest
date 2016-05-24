@@ -1,0 +1,20 @@
+package tools;
+
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+/**
+ * Make jason update this comment block.
+ *
+ * @author jason
+ * @since 5/24/16
+ */
+public abstract class AbstractTest extends AbstractBase
+{
+    /**
+     * Set up the webdriver instance
+     */
+    protected void setupDriver ()
+    {
+        driver = new FirefoxDriver();
+    }
+}
