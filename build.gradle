@@ -6,24 +6,19 @@ compileTestJava {
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-sourceSets
-        {
-            test
-                    {
-                        java
-                                {
-                                    srcDirs = ['src']
-                                }
-                        resources
-                                {
-                                    srcDirs = ['etc']
-                                }
-                    }
+sourceSets {
+    test {
+        java {
+            srcDirs = ['src']
         }
+        resources {
+            srcDirs = ['etc']
+        }
+    }
+}
 
-dependencies
-{
-    compile group: 'junit', name: 'junit', version: '4.11' //junitVersion
+dependencies {
+    compile group: 'org.testng', name: 'testng', version: '6.9.10'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '2.52.0' //seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '2.52.0' //seleniumVersion
     compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '2.52.0' //seleniumVersion
@@ -32,8 +27,7 @@ dependencies
     compile 'com.google.code.gson:gson:2.5'
 }
 
-repositories
-{
+repositories {
     mavenCentral()
     mavenLocal()
 }
@@ -45,6 +39,11 @@ task deleteFiles(type: Delete) {
         include '*.png'
     }
     outputs.upToDateWhen {false}
+}
+
+task loginTest(type: Test){
+    useTestNG()
+    include 'com/ontraport/app/tests/**'
 }
 
 allprojects {

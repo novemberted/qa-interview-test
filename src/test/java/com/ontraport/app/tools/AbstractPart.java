@@ -6,6 +6,6 @@ package com.ontraport.app.tools;
  * @author jason
  * @since 5/24/16
  */
-public class AbstractPart extends AbstractBase
+public abstract class AbstractPart extends AbstractBase
 {
 }

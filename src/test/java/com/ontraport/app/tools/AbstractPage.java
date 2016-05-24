@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author jason
  * @since 5/24/16
  */
-public class AbstractPage extends AbstractBase
+public abstract class AbstractPage extends AbstractBase
 {
     public AbstractPage(RemoteWebDriver d, WebDriverWait w)
     {
