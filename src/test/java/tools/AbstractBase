@@ -16,8 +16,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public abstract class AbstractBase
 {
-    RemoteWebDriver driver;
-    WebDriverWait wait;
+    protected RemoteWebDriver driver;
+    protected WebDriverWait wait;
     static final int DEFAULT_WAIT = 15;
 
     protected WebElement el(By locator, int timeout)
