@@ -1,10 +1,25 @@
 apply plugin: 'java'
 compileTestJava {
-    sourceCompatibility = org.gradle.api.JavaVersion.VERSION_1_7
-    targetCompatibility = org.gradle.api.JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
 }
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+
+sourceSets
+        {
+            test
+                    {
+                        java
+                                {
+                                    srcDirs = ['src']
+                                }
+                        resources
+                                {
+                                    srcDirs = ['etc']
+                                }
+                    }
+        }
 
 dependencies
 {
@@ -29,10 +44,6 @@ task deleteFiles(type: Delete) {
     delete fileTree('screenshots') {
         include '*.png'
     }
-    delete fileTree('logs') {
-        include '*.txt'
-    }
-    delete 'login.json'
     outputs.upToDateWhen {false}
 }
 
@@ -50,7 +61,6 @@ allprojects {
         systemProperty "run.from.gradle", "true"
         ignoreFailures true
         outputs.upToDateWhen {false}
-        forkEvery 1
     }
     tasks.withType(Copy) {
         mustRunAfter deleteFiles

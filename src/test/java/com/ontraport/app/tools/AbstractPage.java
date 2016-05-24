@@ -1,4 +1,4 @@
-package tools;
+package com.ontraport.app.tools;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
