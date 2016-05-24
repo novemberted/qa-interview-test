@@ -14,7 +14,7 @@ import com.ontraport.app.tools.AbstractPage;
  */
 public class OntrapagesLogin extends AbstractPage
 {
-    By usernameInput = By.cssSelector("#userme");
+    By usernameInput = By.cssSelector("#username");
 
     By passwordInput = By.cssSelector("#password");
 
