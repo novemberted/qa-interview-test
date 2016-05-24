@@ -42,8 +42,10 @@ task deleteFiles(type: Delete) {
 }
 
 task loginTest(type: Test){
-    useTestNG()
-    include 'com/ontraport/app/tests/**'
+    useTestNG{
+        suites 'src/test/java/com/ontraport/app/suites/testng.xml'
+    }
+//    include 'com/ontraport/app/tests/**'
 }
 
 allprojects {

@@ -1,8 +1,13 @@
 package com.ontraport.app.tools;
 
+import java.io.FileOutputStream;
+
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
 
@@ -14,6 +19,8 @@ import org.testng.annotations.BeforeClass;
  */
 public abstract class AbstractTest extends AbstractBase
 {
+    private static int errorCount = 0;
+
     /**
      * Set up the webdriver instance
      */
@@ -33,9 +40,32 @@ public abstract class AbstractTest extends AbstractBase
         setupDriver();
     }
 
+    @AfterMethod
+    public void afterMethod (ITestResult result)
+    {
+        if ( result.isSuccess() == false )
+        {
+            takeScreenshot(result.getName().trim());
+        }
+    }
+
     @AfterClass
     public void cleanup ()
     {
         driver.quit();
+    }
+
+    public void takeScreenshot (String name)
+    {
+        try
+        {
+            FileOutputStream out = new FileOutputStream("screenshots/failure-" + name + "-" + errorCount++ + ".png");
+            out.write(driver.getScreenshotAs(OutputType.BYTES));
+            out.close();
+        }
+        catch (Exception e)
+        {
+            //catch exceptions here so they dont add noise to the test reporting
+        }
     }
 }
