@@ -1,5 +1,7 @@
 package com.ontraport.app.tests;
 
+import org.testng.annotations.Test;
+
 import com.ontraport.app.pages.LandingPage_ListAll;
 import com.ontraport.app.pages.OntrapagesLogin;
 import com.ontraport.app.tools.AbstractTest;
@@ -12,12 +14,13 @@ import com.ontraport.app.tools.AbstractTest;
  */
 public class Login extends AbstractTest
 {
+    @Test
     public void testLogin ()
     {
         OntrapagesLogin ontrapagesLogin = new OntrapagesLogin(driver, wait);
 
         LandingPage_ListAll landingPage_listAll = ontrapagesLogin.loginAs("foo", "bar");
 
-        assert landingPage_listAll.verifyPage() == false: "Didn't end up on LandingPage ListAll";
+        assert landingPage_listAll.verifyPage() == false : "Didn't end up on LandingPage ListAll";
     }
 }

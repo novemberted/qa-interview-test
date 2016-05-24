@@ -2,6 +2,8 @@ package com.ontraport.app.tools;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 
 /**
@@ -25,8 +27,15 @@ public abstract class AbstractTest extends AbstractBase
      * Constructor sets up the driver. Might want login code to be called eventually too.
      * Really anything that needs to be done before each and every test can be done here.
      */
-    public AbstractTest ()
+    @BeforeClass
+    public void setup ()
     {
         setupDriver();
+    }
+
+    @AfterClass
+    public void cleanup ()
+    {
+        driver.quit();
     }
 }

@@ -27,6 +27,7 @@ public class OntrapagesLogin extends AbstractPage
 
     public LandingPage_ListAll loginAs (String username, String password)
     {
+        driver.get("https://app.ontrapages.com");
         el(usernameInput).sendKeys(username);
         el(passwordInput).sendKeys(password);
         el(loginButton).click();

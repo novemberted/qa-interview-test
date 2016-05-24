@@ -29,7 +29,7 @@ public class LandingPage_ListAll extends AbstractPage
         el(createNewOntrapageButton).click();
     }
 
-    public boolean verifyPage()
+    public boolean verifyPage ()
     {
         return wait.until(ExpectedConditions.urlContains(pageUrl));
     }

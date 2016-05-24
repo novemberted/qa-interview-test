@@ -21,22 +21,22 @@ public abstract class AbstractBase
     static final int DEFAULT_WAIT = 15;
 
 
-    protected WebElement el(By locator, int timeout)
+    protected WebElement el (By locator, int timeout)
     {
         return new WebDriverWait(driver, timeout).until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    protected WebElement el(By locator)
+    protected WebElement el (By locator)
     {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    protected List<WebElement> els(By locator, int timeout)
+    protected List<WebElement> els (By locator, int timeout)
     {
         return new WebDriverWait(driver, timeout).until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
-    protected List<WebElement> els(By locator)
+    protected List<WebElement> els (By locator)
     {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
