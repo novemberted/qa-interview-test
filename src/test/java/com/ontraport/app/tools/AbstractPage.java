@@ -11,6 +11,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public abstract class AbstractPage extends AbstractBase
 {
+    static String baseUrl = "https://app.ontraport.com";
+    static String latch = "/?track_requests=1";
+
+    public static String getUrl()
+    {
+        return baseUrl + latch;
+    }
+
     public AbstractPage (RemoteWebDriver d, WebDriverWait w)
     {
         driver = d;
