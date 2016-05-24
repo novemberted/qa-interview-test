@@ -1,0 +1,58 @@
+apply plugin: 'java'
+compileTestJava {
+    sourceCompatibility = org.gradle.api.JavaVersion.VERSION_1_7
+    targetCompatibility = org.gradle.api.JavaVersion.VERSION_1_7
+}
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+dependencies
+{
+    compile group: 'junit', name: 'junit', version: '4.11' //junitVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '2.52.0' //seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '2.52.0' //seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '2.52.0' //seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.52.0' //seleniumVersion
+    compile 'javax.mail:mail:1.4.7'
+    compile 'com.google.code.gson:gson:2.5'
+}
+
+repositories
+{
+    mavenCentral()
+    mavenLocal()
+}
+
+// Since you cant override the default clean task, do this.
+task deleteFiles(type: Delete) {
+    mkdir('screenshots')
+    delete fileTree('screenshots') {
+        include '*.png'
+    }
+    delete fileTree('logs') {
+        include '*.txt'
+    }
+    delete 'login.json'
+    outputs.upToDateWhen {false}
+}
+
+allprojects {
+    tasks.withType(Test) {
+        //these are passed from the command invoking gradle
+        String h = System.getProperty("header")
+        String a = System.getProperty("account")
+        //if they are set, pass them to the JVMs running tests
+        if (h != null && !h.isEmpty())
+            systemProperties["header"] = h
+        if (a != null && !a.isEmpty())
+            systemProperties["account"] = a
+
+        systemProperty "run.from.gradle", "true"
+        ignoreFailures true
+        outputs.upToDateWhen {false}
+        forkEvery 1
+    }
+    tasks.withType(Copy) {
+        mustRunAfter deleteFiles
+    }
+}
