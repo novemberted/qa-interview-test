@@ -20,7 +20,6 @@ public abstract class AbstractBase
     protected WebDriverWait wait;
     static final int DEFAULT_WAIT = 15;
 
-
     protected WebElement el (By locator, int timeout)
     {
         return new WebDriverWait(driver, timeout).until(ExpectedConditions.presenceOfElementLocated(locator));
@@ -39,5 +38,10 @@ public abstract class AbstractBase
     protected List<WebElement> els (By locator)
     {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+    }
+
+    protected boolean waitForAjax(int timeout)
+    {
+
     }
 }

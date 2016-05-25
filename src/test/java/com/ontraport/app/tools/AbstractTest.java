@@ -5,12 +5,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -40,7 +44,7 @@ public abstract class AbstractTest extends AbstractBase
      */
     protected void setupDriver () throws IOException
     {
-        String urlName = "172.29.4.8";
+        String urlName = "http://172.29.4.8:4444/wd/hub";
         URL url = new URL(urlName);
 
         String headerString = System.getProperty("header");
@@ -69,8 +73,12 @@ public abstract class AbstractTest extends AbstractBase
         profile.setPreference("modifyheaders.headers.value0", headerString);
         profile.setPreference("modifyheaders.headers.enabled0", true);
 
+        LoggingPreferences lop = new LoggingPreferences();
+        lop.enable(LogType.BROWSER, Level.ALL);
+
         DesiredCapabilities cap = DesiredCapabilities.firefox();
         cap.setCapability(FirefoxDriver.PROFILE, profile);
+        cap.setCapability(CapabilityType.LOGGING_PREFS, lop);
 
         String rfg = System.getProperty("run.from.gradle", "false");
         if ( rfg.equals("true") )
@@ -79,7 +87,8 @@ public abstract class AbstractTest extends AbstractBase
         }
         else
         {
-            driver = new FirefoxDriver(cap);
+//            driver = new FirefoxDriver(cap);
+            driver = new RemoteWebDriver(url, cap);
         }
 
         driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT, TimeUnit.SECONDS);
@@ -108,7 +117,7 @@ public abstract class AbstractTest extends AbstractBase
         currentAccount = LoginFactory.getAccount(accountNameString);
 
         driver.get(AbstractPage.getUrl() + "/#!/contact/listAll");
-        OntraportLogin ontraportLogin = new OntraportLogin(driver, wait);
+        OntraportLogin ontraportLogin = new OntraportLogin(driver);
         ontraportLogin.loginAs(currentAccount.getUsername(), currentAccount.getPassword());
         try
         {

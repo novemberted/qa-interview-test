@@ -20,7 +20,7 @@ import com.google.common.base.Function;
  */
 public class CustomConditions
 {
-    static ExpectedCondition<Boolean> latchIsClear = new ExpectedCondition<Boolean>()
+    public static ExpectedCondition<Boolean> latchIsClear = new ExpectedCondition<Boolean>()
     {
         @Override
         public Boolean apply (WebDriver driverObject)

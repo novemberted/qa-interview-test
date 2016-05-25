@@ -1,14 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Suite1" verbose="1" parallel="classes" thread-count="5">
-  <listeners>
-    <listener class-name="com.ontraport.app.tools.AbstractTest"/>
-  </listeners>
   <test name="Selenium">
     <groups>
       <run>
-	<include name="include"/>
-	<exclude name="exclude"/>
+    	<exclude name="ontrapages"/>
       </run>
     </groups>
     <packages>

@@ -2,7 +2,6 @@ package com.ontraport.app.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.ontraport.app.tools.AbstractPage;
 
@@ -20,9 +19,9 @@ public class OntraportLogin extends AbstractPage
 
     By loginButton = By.cssSelector("#login_button");
 
-    public OntraportLogin (RemoteWebDriver d, WebDriverWait w)
+    public OntraportLogin (RemoteWebDriver d)
     {
-        super(d, w);
+        super(d);
     }
 
     public LandingPage_ListAll loginAs (String username, String password)
@@ -31,6 +30,6 @@ public class OntraportLogin extends AbstractPage
         el(usernameInput).sendKeys(username);
         el(passwordInput).sendKeys(password);
         el(loginButton).click();
-        return new LandingPage_ListAll(driver, wait);
+        return new LandingPage_ListAll(driver);
     }
 }

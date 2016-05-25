@@ -14,7 +14,7 @@ import com.ontraport.app.tools.AbstractTest;
  */
 public class Login extends AbstractTest
 {
-    @Test
+    @Test(groups = {"ontrapages"})
     public void testLogin ()
     {
         OntrapagesLogin ontrapagesLogin = new OntrapagesLogin(driver);
