@@ -12,7 +12,9 @@ import org.testng.annotations.BeforeClass;
 
 
 /**
- * Make jason update this comment block.
+ * Abstract superclass for all tests. Holds code related to test startup and shutdown,
+ * as well as (eventually) logging in, recovering additional test logs, and taking screenshots
+ * of failed tests.
  *
  * @author jason
  * @since 5/24/16
@@ -31,7 +33,7 @@ public abstract class AbstractTest extends AbstractBase
     }
 
     /**
-     * Constructor sets up the driver. Might want login code to be called eventually too.
+     * Set up the WebDriver instance. Might want login code to be called eventually too.
      * Really anything that needs to be done before each and every test can be done here.
      */
     @BeforeClass
@@ -40,6 +42,12 @@ public abstract class AbstractTest extends AbstractBase
         setupDriver();
     }
 
+    /**
+     * Called after every test method. Here's a good place to check the status of the test and do
+     * any custom reporting (like screenshots) that's beyond TestNG's builtin reporting
+     *
+     * @param result {@link ITestResult} object that is passed in automatically by TestNG
+     */
     @AfterMethod
     public void afterMethod (ITestResult result)
     {
@@ -49,23 +57,33 @@ public abstract class AbstractTest extends AbstractBase
         }
     }
 
+    /**
+     * Called after every test method in the class has been executed.
+     */
     @AfterClass
     public void cleanup ()
     {
         driver.quit();
     }
 
+    /**
+     * Takes a screenshot of the browser. This supports taking multiple screenshots without the files
+     * overwriting each other
+     *
+     * @param name the base name of the screenshot
+     */
     public void takeScreenshot (String name)
     {
         try
         {
-            FileOutputStream out = new FileOutputStream("screenshots/failure-" + name + "-" + errorCount++ + ".png");
+            FileOutputStream out = new FileOutputStream(String.format("screenshots/failure-%s-%d.png", name, errorCount++));
             out.write(driver.getScreenshotAs(OutputType.BYTES));
             out.close();
         }
         catch (Exception e)
         {
             //catch exceptions here so they dont add noise to the test reporting
+            System.err.println(String.format("Unable to take screenshot number %d for %s", errorCount, name));
         }
     }
 }

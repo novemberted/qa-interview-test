@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Make jason update this comment block.
+ * Abstract superclass to everything. Holds common code for basic Selenium stuff.
  *
  * @author jason
  * @since 5/24/16

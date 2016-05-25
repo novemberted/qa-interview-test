@@ -11,9 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public abstract class AbstractPage extends AbstractBase
 {
-    public AbstractPage (RemoteWebDriver d, WebDriverWait w)
+    public AbstractPage (RemoteWebDriver d)
     {
         driver = d;
-        wait = w;
+        wait = new WebDriverWait(driver, DEFAULT_WAIT);
     }
 }
