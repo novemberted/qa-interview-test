@@ -1,5 +1,9 @@
 package com.ontraport.app.tools;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+
 import com.google.common.base.Function;
 
 /**
@@ -16,5 +20,12 @@ import com.google.common.base.Function;
  */
 public class CustomConditions
 {
-
+    static ExpectedCondition<Boolean> latchIsClear = new ExpectedCondition<Boolean>()
+    {
+        @Override
+        public Boolean apply (WebDriver driverObject)
+        {
+            return (Boolean) ((JavascriptExecutor) driverObject).executeScript("return ontraport.activeRequests === 0");
+        }
+    };
 }
