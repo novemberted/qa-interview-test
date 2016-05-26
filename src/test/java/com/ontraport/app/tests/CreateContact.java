@@ -25,7 +25,7 @@ public class CreateContact extends AbstractTest
         contact_edit.enterFieldValue("Email", UNIQUE + "@example.com");
 
         contact_listAll = contact_edit.clickBack();
-        contact_listAll.search.find(UNIQUE + "@example.com");
+//        contact_listAll.search.find(UNIQUE + "@example.com");
 
         assert contact_listAll.verifyContactExists(UNIQUE + "@example.com") : "Contact not found";
 

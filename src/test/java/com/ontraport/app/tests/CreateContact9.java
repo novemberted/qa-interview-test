@@ -12,10 +12,10 @@ import com.ontraport.app.tools.AbstractTest;
  * @author jason
  * @since 5/24/16
  */
-public class CreateContact2 extends AbstractTest
+public class CreateContact9 extends AbstractTest
 {
     @Test
-    public void testCreateContact2() throws InterruptedException
+    public void testCreateContact() throws InterruptedException
     {
         Contact_ListAll contact_listAll = new Contact_ListAll(driver);
 

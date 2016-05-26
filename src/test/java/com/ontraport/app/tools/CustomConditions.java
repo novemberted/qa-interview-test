@@ -2,6 +2,7 @@ package com.ontraport.app.tools;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import com.google.common.base.Function;
@@ -25,7 +26,15 @@ public class CustomConditions
         @Override
         public Boolean apply (WebDriver driverObject)
         {
-            return (Boolean) ((JavascriptExecutor) driverObject).executeScript("return ontraport.activeRequests === 0");
+            try
+            {
+                return (Boolean) ((JavascriptExecutor) driverObject).executeScript("return ontraport.activeRequests === 0");
+            }
+            catch (WebDriverException e)
+            {
+                System.err.println("Latch is being retarded at: " + driverObject.getCurrentUrl());
+            }
+            return true;
         }
     };
 }
