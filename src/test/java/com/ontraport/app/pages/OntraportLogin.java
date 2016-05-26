@@ -24,12 +24,12 @@ public class OntraportLogin extends AbstractPage
         super(d);
     }
 
-    public LandingPage_ListAll loginAs (String username, String password)
+    public Contact_ListAll loginAs (String username, String password)
     {
-        driver.get("https://app.ontrapages.com");
+        driver.get("https://app.ontraport.com");
         el(usernameInput).sendKeys(username);
         el(passwordInput).sendKeys(password);
         el(loginButton).click();
-        return new LandingPage_ListAll(driver);
+        return new Contact_ListAll(driver);
     }
 }

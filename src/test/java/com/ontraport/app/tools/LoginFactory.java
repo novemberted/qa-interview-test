@@ -14,14 +14,14 @@ import com.google.gson.Gson;
  */
 public class LoginFactory
 {
-    static String loginDir = "etc/login";
+    static String loginDir = "etc/login/";
 
     public static LoginInfo getAccount (String account) throws IOException
     {
         if ( account == null || account.equals("any") )
         {
             //TODO make some fancy code for load-balancing account usage
-            account = "jason";
+            account = "personal";
         }
         FileReader input = new FileReader(loginDir + account + ".json");
         BufferedReader inputReader = new BufferedReader(input);

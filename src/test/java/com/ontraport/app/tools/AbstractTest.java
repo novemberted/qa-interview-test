@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import org.openqa.selenium.Dimension;
@@ -36,8 +35,10 @@ import com.ontraport.app.pages.OntraportLogin;
  */
 public abstract class AbstractTest extends AbstractBase
 {
-    private static int errorCount = 0;
+    private int errorCount = 0;
     LoginInfo currentAccount;
+
+    protected final String UNIQUE = Long.toString(System.currentTimeMillis());
 
     /**
      * Set up the webdriver instance
@@ -87,13 +88,11 @@ public abstract class AbstractTest extends AbstractBase
         }
         else
         {
-//            driver = new FirefoxDriver(cap);
-            driver = new RemoteWebDriver(url, cap);
+            driver = new FirefoxDriver(cap);
+//            driver = new RemoteWebDriver(url, cap);
         }
 
-        driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT, TimeUnit.SECONDS);
         driver.manage().window().setPosition(new Point(0, 0));
-//        driver.manage().window().maximize();
         driver.manage().window().setSize(new Dimension(1920, 1000));
 
         wait = new WebDriverWait(driver, DEFAULT_WAIT);
@@ -127,7 +126,7 @@ public abstract class AbstractTest extends AbstractBase
         {
         }
 
-        driver.get("https://app.ontraport.com/?track_requests=1/#!/contact/listAll");
+        driver.get(AbstractPage.getUrl() + "/#!/contact/listAll");
     }
 
     /**
@@ -138,6 +137,7 @@ public abstract class AbstractTest extends AbstractBase
     public void setup () throws IOException
     {
         setupDriver();
+        loginAs();
     }
 
     /**

@@ -3,6 +3,8 @@ package com.ontraport.app.tools;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.ontraport.app.parts.Search;
+
 /**
  * Make jason update this comment block.
  *
@@ -11,6 +13,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public abstract class AbstractPage extends AbstractBase
 {
+    public Search search;
+
     static String baseUrl = "https://app.ontraport.com";
     static String latch = "/?track_requests=1";
 
@@ -23,5 +27,6 @@ public abstract class AbstractPage extends AbstractBase
     {
         driver = d;
         wait = new WebDriverWait(driver, DEFAULT_WAIT);
+        search = new Search(driver);
     }
 }
