@@ -88,8 +88,8 @@ public abstract class AbstractTest extends AbstractBase
         }
         else
         {
-            driver = new FirefoxDriver(cap);
-//            driver = new RemoteWebDriver(url, cap);
+//            driver = new FirefoxDriver(cap);
+            driver = new RemoteWebDriver(url, cap);
         }
 
         driver.manage().window().setPosition(new Point(0, 0));
@@ -151,6 +151,7 @@ public abstract class AbstractTest extends AbstractBase
     {
         if ( result.isSuccess() == false )
         {
+            System.out.println(driver.getCurrentUrl());
             takeScreenshot(result.getName().trim());
         }
     }

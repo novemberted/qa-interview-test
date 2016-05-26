@@ -3,9 +3,9 @@ package com.ontraport.app.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.ontraport.app.tools.AbstractPage;
-import com.ontraport.app.tools.CustomConditions;
 
 /**
  * Make jason update this comment block.
@@ -26,7 +26,7 @@ public class Contact_ListAll extends AbstractPage
 
     public Contact_Edit clickNewContact ()
     {
-        wait.until(CustomConditions.latchIsClear);
+        waitForAjax();
         el(newContactButton).click();
         return new Contact_Edit(driver);
     }
@@ -34,6 +34,7 @@ public class Contact_ListAll extends AbstractPage
     public boolean verifyContactExists (String contactInfo)
     {
         waitForAjax();
+        wait.until(ExpectedConditions.visibilityOf(el(collectionRow)));
         for(WebElement row : els(collectionRow))
         {
             if ( row.getText().contains(contactInfo) )
