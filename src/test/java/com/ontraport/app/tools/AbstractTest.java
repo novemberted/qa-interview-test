@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
 import org.openqa.selenium.Dimension;
@@ -38,6 +39,10 @@ public abstract class AbstractTest extends AbstractBase
     private int errorCount = 0;
     LoginInfo currentAccount;
 
+    static AtomicInteger threads = new AtomicInteger(0);
+    static AtomicInteger testNumber = new AtomicInteger(0);
+    int thisTest;
+
     protected final String UNIQUE = Long.toString(System.currentTimeMillis());
 
     /**
@@ -53,7 +58,7 @@ public abstract class AbstractTest extends AbstractBase
         {
             headerString = "OntraportStaging";
         }
-        System.out.println("Using header: " + headerString);
+//        System.out.println("Using header: " + headerString);
 
         FirefoxProfile profile = new FirefoxProfile();
 
@@ -105,13 +110,12 @@ public abstract class AbstractTest extends AbstractBase
 
         //override if command line set
         String accountOverride = System.getProperty("account");
-        System.out.println(accountOverride);
         if ( accountOverride != null && accountOverride.trim().isEmpty() == false )
         {
-            System.out.println("Global account settings and defaults overriden!");
+//            System.out.println("Global account settings and defaults overriden!");
             accountNameString = accountOverride;
         }
-        System.out.println("Asking for account: " + accountNameString);
+//        System.out.println("Asking for account: " + accountNameString);
 
         currentAccount = LoginFactory.getAccount(accountNameString);
 
@@ -136,6 +140,10 @@ public abstract class AbstractTest extends AbstractBase
     @BeforeClass
     public void setup () throws IOException
     {
+        int myThreads;
+        thisTest = testNumber.getAndIncrement();
+        myThreads = threads.incrementAndGet();
+        System.out.println(String.format("> Starting test %d. Now %d threads.", thisTest, myThreads));
         setupDriver();
         loginAs();
     }
@@ -162,7 +170,10 @@ public abstract class AbstractTest extends AbstractBase
     @AfterClass
     public void cleanup ()
     {
+        int myThreads;
         driver.quit();
+        myThreads = threads.getAndDecrement();
+        System.out.println(String.format("Finished < test %d. Were %d threads.", thisTest, myThreads));
     }
 
     /**

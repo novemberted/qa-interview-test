@@ -32,7 +32,7 @@ public class CustomConditions
             }
             catch (WebDriverException e)
             {
-                System.err.println("Latch is being retarded at: " + driverObject.getCurrentUrl());
+//                System.err.println("Latch is being retarded at: " + driverObject.getCurrentUrl());
             }
             return true;
         }

@@ -29,7 +29,7 @@ public class LoginFactory
         String json = inputReader.readLine();
         inputReader.close();
 
-        System.out.println("You got account: " + account);
+//        System.out.println("You got account: " + account);
 
         Gson gson = new Gson();
         return gson.fromJson(json, LoginInfo.class);
