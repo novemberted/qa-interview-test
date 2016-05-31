@@ -1,7 +1,8 @@
 package com.ontraport.app.tools;
 
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 
 /**
  * Make jason update this comment block.
@@ -11,9 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public abstract class AbstractPage extends AbstractBase
 {
-    public AbstractPage (RemoteWebDriver d)
+    public AbstractPage ()
     {
-        driver = d;
-        wait = new WebDriverWait(driver, DEFAULT_WAIT);
+        ElementLocatorFactory finder = new AjaxElementLocatorFactory(driver, AbstractBase.DEFAULT_WAIT);
+        PageFactory.initElements(finder, this);
     }
 }
