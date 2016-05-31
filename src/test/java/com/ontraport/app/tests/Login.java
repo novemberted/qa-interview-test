@@ -17,7 +17,7 @@ public class Login extends AbstractTest
     @Test
     public void testLogin ()
     {
-        OntrapagesLogin ontrapagesLogin = new OntrapagesLogin(driver);
+        OntrapagesLogin ontrapagesLogin = new OntrapagesLogin();
 
         LandingPage_ListAll landingPage_listAll = ontrapagesLogin.loginAs("foo", "bar");
 

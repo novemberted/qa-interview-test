@@ -1,7 +1,7 @@
 package com.ontraport.app.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.ontraport.app.tools.AbstractPage;
@@ -14,19 +14,15 @@ public class LandingPage_ListAll extends AbstractPage
 {
     String pageUrl = "#!/landing_page/listAll";
 
-    By createNewOntrapageButton = By.cssSelector(".js-trigger-action__create");
-
-    public LandingPage_ListAll (RemoteWebDriver d)
-    {
-        super(d);
-    }
+    @FindBy(css = ".js-trigger-action__create")
+    private WebElement createNewOntrapageButton;
 
     /**
      * Clicks the "Create New Ontrapage" button
      */
     public void clickCreateNewOntrapage ()
     {
-        el(createNewOntrapageButton).click();
+        clickElement(createNewOntrapageButton);
     }
 
     /**

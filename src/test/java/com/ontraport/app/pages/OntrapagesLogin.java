@@ -1,7 +1,7 @@
 package com.ontraport.app.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.ontraport.app.tools.AbstractPage;
 
@@ -11,30 +11,28 @@ import com.ontraport.app.tools.AbstractPage;
  */
 public class OntrapagesLogin extends AbstractPage
 {
-    By usernameInput = By.cssSelector("#username");
+    @FindBy(css = "#username")
+    WebElement usernameInput;
 
-    By passwordInput = By.cssSelector("#password");
+    @FindBy(css = "#password")
+    WebElement passwordInput;
 
-    By loginButton = By.cssSelector("#login_button");
-
-    public OntrapagesLogin (RemoteWebDriver d)
-    {
-        super(d);
-    }
+    @FindBy(css = "#login_button")
+    WebElement loginButton;
 
     /**
      * Login using the specified username and password
      *
-     * @param username
-     * @param password
-     * @return
+     * @param username the username to use
+     * @param password password for the account
+     * @return LandingPage_ListAll
      */
     public LandingPage_ListAll loginAs (String username, String password)
     {
         driver.get("https://app.ontrapages.com");
-        el(usernameInput).sendKeys(username);
-        el(passwordInput).sendKeys(password);
-        el(loginButton).click();
-        return new LandingPage_ListAll(driver);
+        usernameInput.sendKeys(username);
+        passwordInput.sendKeys(password);
+        loginButton.click();
+        return new LandingPage_ListAll();
     }
 }

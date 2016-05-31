@@ -1,14 +1,24 @@
 package com.ontraport.app.tools;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+
+import com.ontraport.app.pages.OntrapagesLogin;
+import com.ontraport.app.tests.Login;
 
 
 /**
@@ -22,14 +32,72 @@ import org.testng.annotations.BeforeClass;
 public abstract class AbstractTest extends AbstractBase
 {
     private static int errorCount = 0;
+    private long UNIQUE = System.nanoTime();
+
+    private String headerString = "OntraportStaging";
 
     /**
      * Set up the webdriver instance
      */
-    protected void setupDriver ()
+    protected void setupDriver () throws IOException
     {
-        driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, DEFAULT_WAIT);
+        FirefoxProfile profile = new FirefoxProfile();
+
+        File modifyHeadersExtension = new File("modify_headers-0.7.1.1-fx.xpi");
+        profile.addExtension(modifyHeadersExtension);
+
+        //set up the modify headers plugin
+        profile.setPreference("modifyheaders.config.active", true);
+        profile.setPreference("modifyheaders.config.alwaysOn", true);
+        //it looked like this option was necessary, but it isn't. Leaving it here because its not documented.
+        //profile.setPreference("modifyheaders.config.openNewTab", true);
+        profile.setPreference("modifyheaders.start", true);
+
+        //tell it to modify the X-op-env property
+        profile.setPreference("modifyheaders.headers.count", 1);
+        profile.setPreference("modifyheaders.headers.action0", "Add");
+        profile.setPreference("modifyheaders.headers.name0", "X-op-env");
+        profile.setPreference("modifyheaders.headers.value0", headerString);
+        profile.setPreference("modifyheaders.headers.enabled0", true);
+
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+
+        driver = new FirefoxDriver(capabilities);
+
+        driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT, TimeUnit.SECONDS);
+        driver.manage().window().setPosition(new Point(0, 0));
+        driver.manage().window().setSize(new Dimension(1920, 1000));
+
+        //FIXME make me a method please
+        wait = new WebDriverWait(driver, AbstractBase.DEFAULT_WAIT);
+    }
+
+    /**
+     * Logs in as the user specified in a json file in the directory etc/login/
+     *
+     * @throws IOException
+     */
+    public static void loginAs () throws IOException
+    {
+        String accountNameString = "personal";
+
+        System.out.println("Asking for account: " + accountNameString);
+
+        currentAccount = OntraportLoginFactory.getLogin(accountNameString);
+
+        driver.get(AbstractPage.getUrl() + "?track_requests=1/#!/contact/listAll");
+        OntrapagesLogin ontrapagesLogin = new OntrapagesLogin();
+        ontrapagesLogin.loginAs(currentAccount.getUsername(), currentAccount.getPassword());
+        try
+        {
+            Thread.sleep(10000);
+        }
+        catch (InterruptedException e)
+        {
+        }
+
+        driver.get("https://app.ontraport.com/?track_requests=1/#!/contact/listAll");
     }
 
     /**
@@ -37,7 +105,7 @@ public abstract class AbstractTest extends AbstractBase
      * Really anything that needs to be done before each and every test can be done here.
      */
     @BeforeClass
-    public void setup ()
+    public void setup () throws IOException
     {
         setupDriver();
     }
