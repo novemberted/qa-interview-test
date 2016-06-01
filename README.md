@@ -9,15 +9,16 @@ This is the account creation section of the app. Create a test plan around this 
 Using this test plan, test the page. Document any bugs you find.
 
 # Part 2:
-Fork this repo to your personal GitHub account.
+Fork this repo to your personal GitHub account. Note that the project uses Gradle, so you'll need to run 
+./gradelw eclipse or ./gradlew idea (depending on your IDE) from the project's root in order to download dependencies and build the project before importing to your IDE. You'll also need to install Firefox if you don't already have it.
 
 Write a test that does the following:
 
 1. Navigate to the same page as above
 2. Fill out the form
 3. Click submit
-4. Validate that you’re redirectedto the pricing page
-5. Validate that the price "$597" appears in the table
+4. Validate that you’re redirected to the pricing page
+5. Validate that the price "$5970" appears in the table
 
 For #5, your page class should include two methods
 * One that returns a List of the table rows as WebElements
