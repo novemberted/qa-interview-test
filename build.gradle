@@ -9,7 +9,7 @@ apply plugin: 'idea'
 sourceSets {
     test {
         java {
-            srcDirs = ['src']
+            srcDirs = ['src/main/java']
         }
         resources {
             srcDirs = ['etc']
