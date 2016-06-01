@@ -13,12 +13,10 @@ import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 public abstract class AbstractPage extends AbstractBase
 {
     protected static String url = "https://app.ontraport.com/";
-    private static String latch = "?track_requests=1";
-
 
     public AbstractPage ()
     {
-        ElementLocatorFactory finder = new AjaxElementLocatorFactory(driver, AbstractBase.DEFAULT_WAIT);
+        ElementLocatorFactory finder = new AjaxElementLocatorFactory(driver, com.ontraport.app.tools.AbstractBase.DEFAULT_WAIT);
         PageFactory.initElements(finder, this);
     }
 
@@ -30,15 +28,5 @@ public abstract class AbstractPage extends AbstractBase
     public static String getUrl ()
     {
         return AbstractPage.url;
-    }
-
-    /**
-     * Gets the AbstractPage's latch.
-     *
-     * @return String - value of the latch.
-     */
-    public static String getLatch ()
-    {
-        return latch;
     }
 }

@@ -1,6 +1,5 @@
 package com.ontraport.app.tools;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -16,9 +15,6 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-
-import com.ontraport.app.pages.OntrapagesLogin;
-import com.ontraport.app.tests.Login;
 
 
 /**
@@ -43,23 +39,6 @@ public abstract class AbstractTest extends AbstractBase
     {
         FirefoxProfile profile = new FirefoxProfile();
 
-        File modifyHeadersExtension = new File("modify_headers-0.7.1.1-fx.xpi");
-        profile.addExtension(modifyHeadersExtension);
-
-        //set up the modify headers plugin
-        profile.setPreference("modifyheaders.config.active", true);
-        profile.setPreference("modifyheaders.config.alwaysOn", true);
-        //it looked like this option was necessary, but it isn't. Leaving it here because its not documented.
-        //profile.setPreference("modifyheaders.config.openNewTab", true);
-        profile.setPreference("modifyheaders.start", true);
-
-        //tell it to modify the X-op-env property
-        profile.setPreference("modifyheaders.headers.count", 1);
-        profile.setPreference("modifyheaders.headers.action0", "Add");
-        profile.setPreference("modifyheaders.headers.name0", "X-op-env");
-        profile.setPreference("modifyheaders.headers.value0", headerString);
-        profile.setPreference("modifyheaders.headers.enabled0", true);
-
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setCapability(FirefoxDriver.PROFILE, profile);
 
@@ -71,33 +50,6 @@ public abstract class AbstractTest extends AbstractBase
 
         //FIXME make me a method please
         wait = new WebDriverWait(driver, AbstractBase.DEFAULT_WAIT);
-    }
-
-    /**
-     * Logs in as the user specified in a json file in the directory etc/login/
-     *
-     * @throws IOException
-     */
-    public static void loginAs () throws IOException
-    {
-        String accountNameString = "personal";
-
-        System.out.println("Asking for account: " + accountNameString);
-
-        currentAccount = OntraportLoginFactory.getLogin(accountNameString);
-
-        driver.get(AbstractPage.getUrl() + "?track_requests=1/#!/contact/listAll");
-        OntrapagesLogin ontrapagesLogin = new OntrapagesLogin();
-        ontrapagesLogin.loginAs(currentAccount.getUsername(), currentAccount.getPassword());
-        try
-        {
-            Thread.sleep(10000);
-        }
-        catch (InterruptedException e)
-        {
-        }
-
-        driver.get("https://app.ontraport.com/?track_requests=1/#!/contact/listAll");
     }
 
     /**
