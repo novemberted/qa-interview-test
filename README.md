@@ -17,7 +17,7 @@ Write a test that does the following:
 2. Fill out the form
 3. Click submit
 4. Validate that you’re redirectedto the pricing page
-5. Validate that the price (597) appears in the table
+5. Validate that the price "$597" appears in the table
 
 For #5, your page class should include two methods
 * One that returns a List of the table rows as WebElements
