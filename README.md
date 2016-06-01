@@ -9,7 +9,8 @@ This is the account creation section of the app. Create a test plan around this 
 Using this test plan, test the page. Document any bugs you find.
 
 # Part 2:
-Fork this repo to your personal GitHub account
+Fork this repo to your personal GitHub account.
+
 Write a test that does the following:
 
 1. Navigate to the same page as above
